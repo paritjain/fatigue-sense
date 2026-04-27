@@ -180,11 +180,15 @@ const Index = () => {
           <WebcamFeed isActive={isRunning} onFpsUpdate={setFps} />
 
           {/* Charts */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <RealTimeChart data={chartData.blinkRate} label="Blink Rate" unit="/min" color="hsl(var(--chart-1))" threshold={thresholds.blinkRate.danger} thresholdLabel="Fatigue threshold" />
             <RealTimeChart data={chartData.ear} label="Eye Aspect Ratio" unit="" color="hsl(var(--chart-2))" threshold={thresholds.ear.danger} thresholdLabel="Fatigue threshold" />
             <RealTimeChart data={chartData.pitch} label="Voice Pitch" unit="Hz" color="hsl(var(--chart-3))" />
+            <RealTimeChart data={chartData.stress} label="Stress Level" unit="%" color="hsl(var(--status-fatigued))" threshold={70} thresholdLabel="High stress" />
           </div>
+
+          {/* Domain-specific metrics */}
+          <DomainMetrics domain={currentDomain} metrics={metrics} />
 
           {/* Alert Panel */}
           <AlertPanel alerts={alerts} breakSuggested={breakSuggested} onDismissBreak={dismissBreak} />
