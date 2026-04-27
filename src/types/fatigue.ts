@@ -22,6 +22,7 @@ export interface SessionRecord {
 export interface SessionDataPoint {
   time: number;
   fatigueLevel: number;
+  stressLevel: number;
   blinkRate: number;
   ear: number;
   speechRate: number;
@@ -29,6 +30,16 @@ export interface SessionDataPoint {
   perclos: number;
   headStability: number;
   voiceEnergy: number;
+  // Domain-specific
+  screenStrain?: number;
+  typingFatigue?: number;
+  cognitiveLoad?: number;
+  attentionScore?: number;
+  yawnRate?: number;
+  postureSlouch?: number;
+  reactionTime?: number;
+  breathingRate?: number;
+  recoveryIndex?: number;
 }
 
 export interface CalibrationData {
