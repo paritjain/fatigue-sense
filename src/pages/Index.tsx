@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { Eye, Activity, Mic, Brain, Waves, Target, Volume2, Monitor, Crosshair } from 'lucide-react';
+import { Eye, Activity, Mic, Brain, Waves, Target, Volume2, Monitor, Crosshair, Flame } from 'lucide-react';
 import FatigueGauge from '@/components/FatigueGauge';
 import MetricCard from '@/components/MetricCard';
 import WebcamFeed from '@/components/WebcamFeed';
@@ -8,6 +8,7 @@ import RealTimeChart from '@/components/RealTimeChart';
 import ControlPanel from '@/components/ControlPanel';
 import CalibrationOverlay from '@/components/CalibrationOverlay';
 import DomainSelector from '@/components/DomainSelector';
+import DomainMetrics from '@/components/DomainMetrics';
 import ProfileManager from '@/components/ProfileManager';
 import AlertPanel from '@/components/AlertPanel';
 import SessionHistory from '@/components/SessionHistory';
