@@ -1,10 +1,17 @@
-import { SessionRecord, SessionDataPoint } from '@/types/fatigue';
+import { SessionRecord } from '@/types/fatigue';
 
 export const exportSessionToCSV = (session: SessionRecord) => {
-  const headers = ['Time(s)', 'Fatigue(%)', 'BlinkRate(/min)', 'EAR', 'SpeechRate(/s)', 'Pitch(Hz)', 'PERCLOS(%)', 'HeadStability(%)', 'VoiceEnergy(dB)'];
+  const headers = [
+    'Time(s)', 'Fatigue(%)', 'Stress(%)', 'BlinkRate(/min)', 'EAR', 'SpeechRate(/s)', 'Pitch(Hz)',
+    'PERCLOS(%)', 'HeadStability(%)', 'VoiceEnergy(dB)',
+    'ScreenStrain(%)', 'TypingFatigue(%)', 'CognitiveLoad(%)',
+    'Attention(%)', 'YawnRate(/min)', 'PostureSlouch(%)',
+    'ReactionTime(ms)', 'BreathingRate(/min)', 'RecoveryIndex(%)',
+  ];
   const rows = session.dataPoints.map(d => [
     d.time,
     d.fatigueLevel,
+    d.stressLevel ?? '',
     d.blinkRate,
     d.ear,
     d.speechRate,
@@ -12,6 +19,15 @@ export const exportSessionToCSV = (session: SessionRecord) => {
     (d.perclos * 100).toFixed(1),
     (d.headStability * 100).toFixed(1),
     d.voiceEnergy,
+    d.screenStrain ?? '',
+    d.typingFatigue ?? '',
+    d.cognitiveLoad ?? '',
+    d.attentionScore ?? '',
+    d.yawnRate ?? '',
+    d.postureSlouch ?? '',
+    d.reactionTime ?? '',
+    d.breathingRate ?? '',
+    d.recoveryIndex ?? '',
   ].join(','));
 
   const csv = [headers.join(','), ...rows].join('\n');
