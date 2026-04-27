@@ -1,5 +1,5 @@
 import { useState, useCallback, useRef } from 'react';
-import { Eye, Activity, Mic, Brain, Waves, Target, Volume2, Monitor, Crosshair } from 'lucide-react';
+import { Eye, Activity, Mic, Brain, Waves, Target, Volume2, Monitor, Crosshair, Flame } from 'lucide-react';
 import FatigueGauge from '@/components/FatigueGauge';
 import MetricCard from '@/components/MetricCard';
 import WebcamFeed from '@/components/WebcamFeed';
@@ -8,6 +8,7 @@ import RealTimeChart from '@/components/RealTimeChart';
 import ControlPanel from '@/components/ControlPanel';
 import CalibrationOverlay from '@/components/CalibrationOverlay';
 import DomainSelector from '@/components/DomainSelector';
+import DomainMetrics from '@/components/DomainMetrics';
 import ProfileManager from '@/components/ProfileManager';
 import AlertPanel from '@/components/AlertPanel';
 import SessionHistory from '@/components/SessionHistory';
@@ -179,11 +180,15 @@ const Index = () => {
           <WebcamFeed isActive={isRunning} onFpsUpdate={setFps} />
 
           {/* Charts */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
             <RealTimeChart data={chartData.blinkRate} label="Blink Rate" unit="/min" color="hsl(var(--chart-1))" threshold={thresholds.blinkRate.danger} thresholdLabel="Fatigue threshold" />
             <RealTimeChart data={chartData.ear} label="Eye Aspect Ratio" unit="" color="hsl(var(--chart-2))" threshold={thresholds.ear.danger} thresholdLabel="Fatigue threshold" />
             <RealTimeChart data={chartData.pitch} label="Voice Pitch" unit="Hz" color="hsl(var(--chart-3))" />
+            <RealTimeChart data={chartData.stress} label="Stress Level" unit="%" color="hsl(var(--status-fatigued))" threshold={70} thresholdLabel="High stress" />
           </div>
+
+          {/* Domain-specific metrics */}
+          <DomainMetrics domain={currentDomain} metrics={metrics} />
 
           {/* Alert Panel */}
           <AlertPanel alerts={alerts} breakSuggested={breakSuggested} onDismissBreak={dismissBreak} />
@@ -229,6 +234,7 @@ const Index = () => {
             <MetricCard label="PERCLOS" value={(metrics.perclos * 100).toFixed(0)} unit="%" icon={<Monitor className="w-4 h-4" />} status={getMetricStatus(metrics.perclos, thresholds.perclos)} />
             <MetricCard label="Head Stability" value={(metrics.headStability * 100).toFixed(0)} unit="%" icon={<Activity className="w-4 h-4" />} status={getMetricStatus(metrics.headStability, thresholds.headStability, true)} />
             <MetricCard label="Voice Energy" value={metrics.voiceEnergy} unit="dB" icon={<Volume2 className="w-4 h-4" />} status={getMetricStatus(metrics.voiceEnergy, thresholds.voiceEnergy, true)} />
+            <MetricCard label="Stress" value={metrics.stressLevel} unit="%" icon={<Flame className="w-4 h-4" />} status={metrics.stressLevel >= 70 ? 'danger' : metrics.stressLevel >= 50 ? 'warning' : 'normal'} trend={metrics.stressLevel > 50 ? 'up' : 'stable'} />
             <MetricCard label="FPS" value={isRunning ? fps : 0} unit="" icon={<Monitor className="w-4 h-4" />} status={fps < 12 && isRunning ? 'warning' : 'normal'} />
           </div>
 
