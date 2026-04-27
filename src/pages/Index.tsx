@@ -234,6 +234,7 @@ const Index = () => {
             <MetricCard label="PERCLOS" value={(metrics.perclos * 100).toFixed(0)} unit="%" icon={<Monitor className="w-4 h-4" />} status={getMetricStatus(metrics.perclos, thresholds.perclos)} />
             <MetricCard label="Head Stability" value={(metrics.headStability * 100).toFixed(0)} unit="%" icon={<Activity className="w-4 h-4" />} status={getMetricStatus(metrics.headStability, thresholds.headStability, true)} />
             <MetricCard label="Voice Energy" value={metrics.voiceEnergy} unit="dB" icon={<Volume2 className="w-4 h-4" />} status={getMetricStatus(metrics.voiceEnergy, thresholds.voiceEnergy, true)} />
+            <MetricCard label="Stress" value={metrics.stressLevel} unit="%" icon={<Flame className="w-4 h-4" />} status={metrics.stressLevel >= 70 ? 'danger' : metrics.stressLevel >= 50 ? 'warning' : 'normal'} trend={metrics.stressLevel > 50 ? 'up' : 'stable'} />
             <MetricCard label="FPS" value={isRunning ? fps : 0} unit="" icon={<Monitor className="w-4 h-4" />} status={fps < 12 && isRunning ? 'warning' : 'normal'} />
           </div>
 
